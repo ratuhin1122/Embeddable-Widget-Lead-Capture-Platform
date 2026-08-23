@@ -1,0 +1,52 @@
+{
+  "name": "embeddable-widget-platform",
+  "version": "1.0.0",
+  "description": "Embeddable Widget & Lead-Capture Platform — FlyRank Backend Capstone",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "migrate": "knex --knexfile src/db/knexfile.js migrate:latest",
+    "migrate:rollback": "knex --knexfile src/db/knexfile.js migrate:rollback",
+    "seed": "node src/db/seed.js",
+    "test": "jest --forceExit --detectOpenHandles --verbose",
+    "test:watch": "jest --watch --forceExit --detectOpenHandles"
+  },
+  "keywords": [
+    "widget",
+    "embeddable",
+    "lead-capture",
+    "capstone"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "nodemailer": "^6.9.14",
+    "pg": "^8.12.0",
+    "sqlite3": "^6.0.1",
+    "uuid": "^10.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.4",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "setupFilesAfterEnv": [
+      "./tests/setup.js"
+    ],
+    "testEnvironment": "node"
+  }
+}
