@@ -1,0 +1,17 @@
+run: npm start
+seed: node src/db/seed.js
+test: npm test
+base_url: http://localhost:3000
+endpoints:
+  - POST /api/auth/register
+  - POST /api/auth/login
+  - POST /api/widgets
+  - GET /api/widgets
+  - GET /api/widgets/:id
+  - PUT /api/widgets/:id
+  - DELETE /api/widgets/:id
+  - GET /api/widgets/:id/config
+  - POST /api/submit/:widgetId
+  - GET /api/dashboard/submissions
+  - GET /api/dashboard/stats
+  - GET /api/dashboard/geo
