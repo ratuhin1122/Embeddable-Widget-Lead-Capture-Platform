@@ -10,11 +10,11 @@ Widget Owner (authenticated)
 
 Customer Website (any origin)
     └─ <script src="widget.js?id=123">
-           └─► GET /widgets/:id/config   (public · cached · CORS)
+           └─► GET /api/widgets/:id/config   (public · cached · CORS)
                    └─► render widget
 
 Website Visitor
-    └─► POST /submissions   (public · CORS)
+    └─► POST /api/submit/:widgetId   (public · CORS)
            ├─► validation          ── bad payload? → 4xx, never 500
            ├─► rate limit + spam   ── flood? → 429, service stays up
            ├─► geo enrichment      ── Provider A → Provider B → store anyway
@@ -78,7 +78,10 @@ npm run dev
 npx serve public/test-page -l 5500
 ```
 
-Open http://localhost:5500 — the widget loads from http://localhost:3000 (cross-origin).
+Open `http://localhost:5500?id=WIDGET_ID` — replace `WIDGET_ID` with one of the
+IDs printed by `npm run seed`. The widget loads from http://localhost:3000
+(cross-origin). If no `?id=` parameter is provided, the page shows a short
+help message.
 
 ## API Endpoints
 
