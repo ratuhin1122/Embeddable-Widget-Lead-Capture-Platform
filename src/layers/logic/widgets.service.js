@@ -84,7 +84,7 @@ const WidgetsService = {
    * Generate the embed snippet for a widget.
    */
   getEmbedSnippet(widgetId) {
-    const baseUrl = `http://localhost:${config.port}`;
+    const baseUrl = config.publicBaseUrl || `http://localhost:${config.port}`;
     return `<script src="${baseUrl}/widget.js?id=${widgetId}"></script>`;
   },
 };

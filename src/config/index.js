@@ -44,6 +44,9 @@ const config = {
 
   // CORS
   allowedOrigins: (process.env.ALLOWED_ORIGINS || 'http://localhost:5500').split(',').map(s => s.trim()),
+
+  // Public base URL for embed snippets
+  publicBaseUrl: process.env.PUBLIC_BASE_URL || '',
 };
 
 module.exports = config;
