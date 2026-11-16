@@ -1,14 +1,32 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+
+const UNSAFE_JWT_SECRETS = ['change-me', 'change-me-to-a-random-string'];
+
+const rawJwtSecret = process.env.JWT_SECRET || '';
+const nodeEnv = process.env.NODE_ENV || 'development';
+
+if (nodeEnv === 'production' && (!rawJwtSecret || UNSAFE_JWT_SECRETS.includes(rawJwtSecret))) {
+  throw new Error(
+    'FATAL: JWT_SECRET is missing or set to an unsafe default. Set a strong, random JWT_SECRET before running in production.'
+  );
+}
+
+if (nodeEnv !== 'production' && (!rawJwtSecret || UNSAFE_JWT_SECRETS.includes(rawJwtSecret))) {
+  console.warn(
+    '⚠️  WARNING: JWT_SECRET is missing or set to an unsafe default. This is acceptable for local development but MUST be changed before deploying to production.'
+  );
+}
 
 const config = {
   port: parseInt(process.env.PORT, 10) || 3000,
-  nodeEnv: process.env.NODE_ENV || 'development',
+  nodeEnv,
 
   // Database
   databaseUrl: process.env.DATABASE_URL || 'postgres://widget_user:widget_pass@localhost:5432/widget_db',
 
   // Auth
-  jwtSecret: process.env.JWT_SECRET || 'change-me',
+  jwtSecret: rawJwtSecret || 'change-me',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
 
   // Geo providers
