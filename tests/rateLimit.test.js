@@ -21,14 +21,14 @@ describe('Rate Limiting', () => {
   });
 
   it('should return 429 after exceeding rate limit, then recover', async () => {
-    const widgetId = 'rate-limit-test-widget';
+    const submitWidgetId = 'rate-limit-test-widget';
     const payload = { data: { name: 'Burst Test' } };
 
     // Fire 12 rapid requests (limit is 10/min per IP+widget)
     const results = [];
     for (let i = 0; i < 12; i++) {
       const res = await request(app)
-        .post(`/api/submit/${widgetId}`)
+        .post(`/api/submit/${submitWidgetId}`)
         .set('Content-Type', 'application/json')
         .send(payload);
       results.push(res.status);
@@ -40,7 +40,7 @@ describe('Rate Limiting', () => {
 
     // The 429 response should be valid JSON
     const lastRes = await request(app)
-      .post(`/api/submit/${widgetId}`)
+      .post(`/api/submit/${submitWidgetId}`)
       .set('Content-Type', 'application/json')
       .send(payload);
 
@@ -48,5 +48,26 @@ describe('Rate Limiting', () => {
       expect(lastRes.body.error).toBe('Too many requests');
       expect(lastRes.body.message).toBeDefined();
     }
+  });
+
+  it('should allow 40 rapid GET /api/widgets/:id/config requests from the same IP without rate limiting', async () => {
+    const statuses = [];
+    for (let i = 0; i < 40; i++) {
+      const res = await request(app).get(`/api/widgets/${widgetId}/config`);
+      statuses.push(res.status);
+    }
+    expect(statuses.every(s => s === 200)).toBe(true);
+  });
+
+  it('should limit rapid /api/auth/login requests', async () => {
+    const results = [];
+    for (let i = 0; i < 35; i++) {
+      const res = await request(app)
+        .post('/api/auth/login')
+        .send({ email: 'ratelimit@example.com', password: 'wrongpassword' });
+      results.push(res.status);
+    }
+    const rateLimited = results.filter(s => s === 429);
+    expect(rateLimited.length).toBeGreaterThan(0);
   });
 });

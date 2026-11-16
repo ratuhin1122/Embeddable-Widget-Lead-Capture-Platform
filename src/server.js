@@ -4,6 +4,7 @@ const path = require('path');
 const config = require('./config');
 const { configureCors } = require('./middleware/cors.middleware');
 const { errorHandler } = require('./middleware/errorHandler.middleware');
+const { apiLimiter } = require('./middleware/rateLimiter.middleware');
 
 // Route imports
 const authRoutes = require('./layers/http/auth.routes');
@@ -33,7 +34,7 @@ app.use('/widget.js', (req, res, next) => {
 }, express.static(path.join(__dirname, '..', 'public', 'widget.js')));
 
 // ── API routes ──
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', apiLimiter, authRoutes);
 app.use('/api/widgets', widgetRoutes);
 app.use('/api/submit', submissionRoutes);
 app.use('/api/dashboard', dashboardRoutes);
