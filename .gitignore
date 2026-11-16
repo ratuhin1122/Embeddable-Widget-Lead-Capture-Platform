@@ -23,3 +23,7 @@ Thumbs.db
 extract_pdf.py
 extracted_text.txt
 *.pdf
+
+# SQLite databases
+*.sqlite3
+dev.sqlite3
