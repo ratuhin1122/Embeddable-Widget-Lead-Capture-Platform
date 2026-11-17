@@ -121,6 +121,13 @@ help message.
 - **Email is local-only** — uses Mailpit; what's graded is that email failure doesn't block success.
 - **Geo providers are rate-limited** — ip-api.com allows 45 req/min; ipapi.co allows ~1000/day.
 
+## AI Agent Skill (Agensi)
+
+This platform is published as an autonomous agent skill on [Agensi](https://agensi.ai).
+AI agents can self-host, configure, create widgets, embed forms, and monitor lead submissions autonomously using the verified widget-lead-capture (v1.1.0) skill package.
+
+- **Marketplace Listing:** [widget-lead-capture on Agensi](https://agensi.ai/skills/widget-lead-capture)
+
 ## License
 
 MIT

@@ -1,6 +1,6 @@
 {
   "name": "embeddable-widget-platform",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Embeddable Widget & Lead-Capture Platform — FlyRank Backend Capstone",
   "main": "src/server.js",
   "scripts": {
